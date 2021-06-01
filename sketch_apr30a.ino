@@ -23,11 +23,10 @@ void loop() {
   for(pos = 0; pos <= 180; pos += 1){
     distance = calculateDistance();
     myServo.write(pos);
-    Serial.print("(");
     Serial.print(pos);
-    Serial.print(", ");
+    Serial.print(",");
     Serial.print(distance);
-    Serial.print(")");
+    Serial.print(".");
     delay(15);
   }
 
