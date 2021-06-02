@@ -11,7 +11,6 @@ Servo myServo;
 int pos = 0;
 
 void setup() {
-  // put your setup code here, to run once:
   myServo.attach(8);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
@@ -19,8 +18,7 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  for(pos = 0; pos <= 180; pos += 1){
+    for(pos = 0; pos <= 180; pos += 1){
     distance = calculateDistance();
     myServo.write(pos);
     Serial.print(pos);

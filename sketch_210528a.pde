@@ -12,26 +12,27 @@ int angleValue, distanceValue;
 int dot=0;
 
 void setup() {
- size (1920, 1080);
+ size (1920, 1080); // setting up the canvas which should fit an 1920x1080 screen
  smooth();
  myPort = new Serial(this,"COM3", 9600);
  myPort.bufferUntil('.');
 }
 void draw() {
-  
   fill(98,245,31);
   // this simulates the motion blur and slow fade of the moving line
   noStroke();
   fill(0,4); 
   rect(0, 0, width, 1010); 
   
-  fill(98,245,31); // this is the green color
+  fill(98,245,31); // this is the green color that the line will use to be drawn
   drawRadar(); 
   drawLine();
   drawObject();
   drawText();
 }
 void serialEvent (Serial myPort) { 
+  // the app receives the angle and the distance through the serial port as a touple (separated by "," and ending with ".")
+  
   data = myPort.readStringUntil('.');
   data = data.substring(0,data.length()-1);
   
@@ -39,7 +40,7 @@ void serialEvent (Serial myPort) {
   angle = data.substring(0, dot);
   distance= data.substring(dot+1, data.length());
   
-  
+  // convert the angle and distance from string to integer
   angleValue = int(angle);
   distanceValue = int(distance);
 }
@@ -62,7 +63,7 @@ void drawObject() {
   strokeWeight(5);
   stroke(255,10,10);
   distanceInPixels = distanceValue*8;
-  if(distanceValue<100){
+  if(distanceValue<100){ // it will draw the red line only if the object is in a range of 1 meter
     line(distanceInPixels*cos(radians(angleValue)),-distanceInPixels*sin(radians(angleValue)),800*cos(radians(angleValue)),-800*sin(radians(angleValue)));
   }
   popMatrix();
@@ -76,7 +77,6 @@ void drawLine() {
   popMatrix();
 }
 void drawText() {
-  
   pushMatrix();
   if(distanceValue>100) {
   objectRange = "Out of range";
